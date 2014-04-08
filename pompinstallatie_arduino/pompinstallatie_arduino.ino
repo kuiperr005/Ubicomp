@@ -70,6 +70,6 @@ void loop() {
   }
   //  Serial.print(distance);
   //    Serial.println(" cm");
-  Serial.println(meters);
+  //Serial.println(meters);
 }
 

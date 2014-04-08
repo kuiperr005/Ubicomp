@@ -4,6 +4,8 @@ String val;     // Data received from the serial port
 PImage bg;  // Declare variable "bg" of type PImage
 PFont markerFeltLarge;
 PFont markerFeltSmall;
+boolean dataComing = false;
+String cleanMeters = "25000";
 
 void setup() {
   size(1280, 800);
@@ -20,23 +22,32 @@ void setup() {
 void draw() {
   // Displays the image at its actual size at point (0,0)
   background(bg);
-  if ( myPort.available() > 0) 
-  {  // If data is available,
+  if ( myPort.available() > 0)   {  // If data is available,
   val = myPort.readStringUntil('\n');         // read it and store it in val
   }
  if (val != null) {
-       String cleanMeters = trim(val);
+       cleanMeters = trim(val);
        int meters = Integer.parseInt(cleanMeters);
        int walked = 25000 - meters;
        String walkedString = str(walked);
        textFont(markerFeltLarge, 100);
        textAlign(CENTER);
        fill(0); 
-       text(val, 530, 310); //print aantal meters nog te lopen
+       text(cleanMeters, 530, 310); //print aantal meters nog te lopen
        textFont(markerFeltSmall, 40);
        textAlign(CENTER);
        fill(198,85,23);
        text(walkedString, 630, 400); // print aantal gelopen meters
+ } else {
+   if (cleanMeters == "25000") {
+     textFont(markerFeltLarge, 100);
+     textAlign(CENTER);
+     fill(0); 
+     text("25000", 530, 310); //print aantal meters nog te lopen
+     textFont(markerFeltSmall, 40);
+     textAlign(CENTER);
+     fill(198,85,23);
+     text("0", 630, 400); // print aantal gelopen meters
+   }  
  }
-  delay(1000);
 }
